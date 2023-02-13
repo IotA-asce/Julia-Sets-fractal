@@ -117,6 +117,14 @@ def paint():
 
     clock = pygame.time.Clock()
 
+    for _row in range(GRID_SIZE[0]):
+        for _col in range(GRID_SIZE[1]):
+            shade = 255 - (shade_grid[_row][_col] * 20)
+
+            surface = pygame.Surface((1, 1))
+            surface.fill((shade, shade, shade))
+            screen.blit(surface, (_row, _col))
+
     while True:
 
         for event in pygame.event.get():
@@ -126,18 +134,19 @@ def paint():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 _x, _y = pygame.mouse.get_pos()
-                C.set(_re=(_x - OFFSET[0]), _im=(_y - OFFSET[1]))
+                C.set(_re=(_x - OFFSET[0])/200, _im=(_y - OFFSET[1])/200)
                 complex_grid, shade_grid = compute()
 
-                print(_x, _y)
+                print(C)
 
-        for _row in range(GRID_SIZE[0]):
-            for _col in range(GRID_SIZE[1]):
-                shade = 255 - (shade_grid[_row][_col] * 20)
+                for _row in range(GRID_SIZE[0]):
+                    for _col in range(GRID_SIZE[1]):
+                        shade = 255 - (shade_grid[_row][_col] * 20)
 
-                surface = pygame.Surface((1, 1))
-                surface.fill(shade)
-                screen.blit(surface, (_row, _col))
+                        surface = pygame.Surface((1, 1))
+                        surface.fill((shade, shade, shade))
+                        screen.blit(surface, (_row, _col))
+
         pygame.display.update()
         clock.tick(1)
 
